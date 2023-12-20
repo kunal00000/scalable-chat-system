@@ -5,7 +5,12 @@ class SocketService {
 
   constructor() {
     console.log('🚀 Initializing Socket Service...')
-    this._io = new Server()
+    this._io = new Server({
+      cors: {
+        allowedHeaders: ['*'],
+        origin: '*'
+      }
+    })
   }
 
   public initListeners() {
@@ -17,6 +22,7 @@ class SocketService {
 
       socket.on('event:message', async ({ message }: { message: string }) => {
         console.log('👉 New Message received: ', message)
+        // publish this message to redis
       })
     })
   }
